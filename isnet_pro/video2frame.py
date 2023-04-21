@@ -188,7 +188,9 @@ def video2frame(video_path,output_folder,aim_fps_checkbox,aim_fps,time_range_che
         while(success):
                 if idx in keyframe_id_set:
                         name = "keyframe_" + str(idx).zfill(4) + ".png"
-                        cv2.imwrite(output_folder+"/"+ name, frame)
+                        # 指定输出文件名
+                        output_file = os.path.join(output_folder, name)
+                        cv2.imwrite(output_file, frame)
                         keyframe_id_set.remove(idx)
                 idx = idx + 1
                 success, frame = cap.read()
