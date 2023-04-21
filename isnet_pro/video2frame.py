@@ -118,38 +118,7 @@ def video2frame(video_path,output_folder,aim_fps_checkbox,aim_fps,time_range_che
     start_frame = int(start_time * fps)
     end_frame = int(end_time * fps)
 
-    ## 两种情况运行和不允许
-    if aim_fps_checkbox:
-        video_fps = cap.get(cv2.CAP_PROP_FPS)
-        total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT)
-        # 这个问题是关于视频转图片的方法。首先，我们需要知道视频的帧率（fps），
-        # 即每秒钟播放的帧数。然后，我们可以计算每个输出图片之间的时间间隔，即 
-        # 1/fps。接着，我们需要确定每个输出图片所在的时间点。为了做到这一点，我
-        # 们可以将输出图片的序号乘以时间间隔，然后将结果乘以视频的帧率，再向下取整
-        # ，就可以得到输出图片所对应的视频帧。最后，我们只需要将这些视频帧保存为图片即可。
-        total_output_frames = int( total_frames * aim_fps / video_fps)
-
-    # 生成需要输出的帧的索引
-        if time_range_checkbox:
-            frame_indexes = np.linspace(max(start_frame,0), total_frames - 1, min(int( (end_time-start_time) * aim_fps),end_frame), dtype=np.int)
-        else :
-            frame_indexes = np.linspace(0, total_frames - 1, total_output_frames, dtype=np.int)
-        frame_count = 1
-        for i in tqdm(frame_indexes):
-        # 设置读取帧的位置
-            cap.set(cv2.CAP_PROP_POS_FRAMES, i)
-            # 读取帧并保存为图片
-            ret, frame = cap.read()
-            if ret:
-                # 指定输出文件名
-                output_file = os.path.join(output_folder, f'frame_{frame_count:04d}.png')
-                # print('\r geneframe:',output_file,end='')
-
-                # 保存帧到输出文件
-                cv2.imwrite(output_file, frame)
-                frame_count += 1
-    elif(keyframe_checkbox):
-        # len_window = int(5)
+    if keyframe_checkbox:
         curr_frame = None
         prev_frame = None 
         frame_diffs = []
@@ -195,6 +164,36 @@ def video2frame(video_path,output_folder,aim_fps_checkbox,aim_fps,time_range_che
                 idx = idx + 1
                 success, frame = cap.read()
         cap.release()
+    elif aim_fps_checkbox:
+        ## 两种情况运行和不允许
+        video_fps = cap.get(cv2.CAP_PROP_FPS)
+        total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT)
+        # 这个问题是关于视频转图片的方法。首先，我们需要知道视频的帧率（fps），
+        # 即每秒钟播放的帧数。然后，我们可以计算每个输出图片之间的时间间隔，即 
+        # 1/fps。接着，我们需要确定每个输出图片所在的时间点。为了做到这一点，我
+        # 们可以将输出图片的序号乘以时间间隔，然后将结果乘以视频的帧率，再向下取整
+        # ，就可以得到输出图片所对应的视频帧。最后，我们只需要将这些视频帧保存为图片即可。
+        total_output_frames = int( total_frames * aim_fps / video_fps)
+
+    # 生成需要输出的帧的索引
+        if time_range_checkbox:
+            frame_indexes = np.linspace(max(start_frame,0), total_frames - 1, min(int( (end_time-start_time) * aim_fps),end_frame), dtype=np.int)
+        else :
+            frame_indexes = np.linspace(0, total_frames - 1, total_output_frames, dtype=np.int)
+        frame_count = 1
+        for i in tqdm(frame_indexes):
+        # 设置读取帧的位置
+            cap.set(cv2.CAP_PROP_POS_FRAMES, i)
+            # 读取帧并保存为图片
+            ret, frame = cap.read()
+            if ret:
+                # 指定输出文件名
+                output_file = os.path.join(output_folder, f'frame_{frame_count:04d}.png')
+                # print('\r geneframe:',output_file,end='')
+
+                # 保存帧到输出文件
+                cv2.imwrite(output_file, frame)
+                frame_count += 1
     else:
         # 逐帧读取视频并保存到输出文件夹
         frame_count = 1

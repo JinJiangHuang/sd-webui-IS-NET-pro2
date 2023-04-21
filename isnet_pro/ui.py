@@ -17,6 +17,14 @@ def on_ui_tabs():
                                 video_input_dir = gr.Video(lable='上传视频\\upload video',source='upload',interactive=True)
                                 video_input_dir.style(width=300)
                                 with gr.Row(variant='panel'):
+                                    keyframe_checkbox = gr.Checkbox(label="启用关键帧输出（帧率和时间段无效）\\keyframe")
+                                    len_window = gr.Slider(
+                                        minimum=1,
+                                        maximum=60,
+                                        step=1,
+                                        label='平滑窗口\\smoothing window size',
+                                        value=5,interactive=True)
+                                with gr.Row(variant='panel'):
                                     aim_fps_checkbox = gr.Checkbox(label="启用输出帧率控制\\enable the ouput fps control")
                                     aim_fps = gr.Slider(
                                         minimum=1,
@@ -28,14 +36,6 @@ def on_ui_tabs():
                                     time_range_checkbox = gr.Checkbox(label="启用时间段裁剪\\enable video cut")
                                     aim_start_time = gr.Number(value=0,label="裁剪起始时间(s)\\start_time",)
                                     aim_end_time = gr.Number(value=0,label="裁剪停止时间(s)\\end_time")
-                                with gr.Row(variant='panel'):
-                                    keyframe_checkbox = gr.Checkbox(label="启用关键帧输出\\enable the ouput keyframe")
-                                    len_window = gr.Slider(
-                                        minimum=1,
-                                        maximum=60,
-                                        step=1,
-                                        label='平滑窗口\\smoothing window size',
-                                        value=5,interactive=True)
                                 frame_output_dir = gr.Textbox(label='图片输出地址\\Frame Output directory', lines=1,placeholder='output\\folder')
                                 btn = gr.Button(value="gene_frame")
                                 out = gr.Textbox(label="log info",interactive=False,visible=True,placeholder="output log")
