@@ -46,10 +46,9 @@ def on_ui_tabs():
                                 gr.Markdown(""" 
                                 ## 帧生成'视频'\\frame2video
                                 由图片转化为视频，注意这里只需要给出生成视频的地址即可，不要文件名！！！！  
-                                本拓展由 [_星瞳毒唯](https://space.bilibili.com/113557956)编写  
-                                本拓展GitHub项目在 [_github_sd-webui-IS-NET-pro](https://github.com/ClockZinc/sd-webui-IS-NET-pro)  
+                                本拓展由 [_星瞳毒唯]编写  
+                                本拓展GitHub项目在 [_github_sd-webui-IS-NET-pro2](https://github.com/JinJiangHuang/sd-webui-IS-NET-pro2)  
                                 本拓展使用的算法有使用的DIS的开源项目 [_github_DIS](https://github.com/xuebinqin/DIS)  
-                                有任何问题均可b站私信我,我看心情回答,本项目不收取任何费用！！  
                                 
                                 """)
                                 fps = gr.Slider(
