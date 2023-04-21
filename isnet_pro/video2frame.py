@@ -142,7 +142,7 @@ def video2frame(video_path,output_folder,aim_fps_checkbox,aim_fps,time_range_che
             ret, frame = cap.read()
             if ret:
                 # 指定输出文件名
-                output_file = os.path.join(output_folder, f'{frame_count:04d}.png')
+                output_file = os.path.join(output_folder, f'frame_{frame_count:04d}.png')
                 # print('\r geneframe:',output_file,end='')
 
                 # 保存帧到输出文件
@@ -187,9 +187,9 @@ def video2frame(video_path,output_folder,aim_fps_checkbox,aim_fps,time_range_che
         idx = 0
         while(success):
                 if idx in keyframe_id_set:
-                        name = "keyframe_" + str(idx).zfill(4) + ".png"
+                        # name = "keyframe_" + str(idx).zfill(4) + ".png"
                         # 指定输出文件名
-                        output_file = os.path.join(output_folder, name)
+                        output_file = os.path.join(output_folder, f'keyframe_{idx:04d}.png')
                         cv2.imwrite(output_file, frame)
                         keyframe_id_set.remove(idx)
                 idx = idx + 1
@@ -208,7 +208,7 @@ def video2frame(video_path,output_folder,aim_fps_checkbox,aim_fps,time_range_che
                 break
             if (i >= start_frame and i <= end_frame) or (not time_range_checkbox):
             # 指定输出文件名
-                output_file = os.path.join(output_folder, f'{frame_count:04d}.png')
+                output_file = os.path.join(output_folder, f'frame_{frame_count:04d}.png')
                 # print('\r geneframe:',output_file,end='')
 
                 # 保存帧到输出文件
