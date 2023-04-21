@@ -25,13 +25,21 @@ def on_ui_tabs():
                                         label='输出帧率\\output fps',
                                         value=30,interactive=True)
                                 with gr.Row(variant='panel'):
+                                    keyframe_checkbox = gr.Checkbox(label="启用关键帧输出\\enable the ouput keyframe")
+                                    len_window = gr.Slider(
+                                        minimum=1,
+                                        maximum=60,
+                                        step=1,
+                                        label='平滑窗口\\smoothing window size',
+                                        value=5,interactive=True)
+                                with gr.Row(variant='panel'):
                                     time_range_checkbox = gr.Checkbox(label="启用时间段裁剪\\enable video cut")
                                     aim_start_time = gr.Number(value=0,label="裁剪起始时间(s)\\start_time",)
                                     aim_end_time = gr.Number(value=0,label="裁剪停止时间(s)\\end_time")
                                 frame_output_dir = gr.Textbox(label='图片输出地址\\Frame Output directory', lines=1,placeholder='output\\folder')
                                 btn = gr.Button(value="gene_frame")
                                 out = gr.Textbox(label="log info",interactive=False,visible=True,placeholder="output log")
-                                btn.click(video2frame, inputs=[video_input_dir, frame_output_dir,aim_fps_checkbox,aim_fps,time_range_checkbox,aim_start_time,aim_end_time],outputs=out)
+                                btn.click(video2frame, inputs=[video_input_dir, frame_output_dir,aim_fps_checkbox,aim_fps,time_range_checkbox,aim_start_time,aim_end_time,keyframe_checkbox,len_window],outputs=out)
                     # with gr.TabItem(label='video2frame'):
                     #     with gr.Row(variant='panel'):
                             with gr.Column(variant='panel'):
