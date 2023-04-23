@@ -1,3 +1,4 @@
+# 在sd-webui-IS-net-pro基础上增加提取关键帧功能
 # sd-webui-IS-net
 在大佬的基础上做了一个简单的插件  
 Just  git it in your extensions folder in your Stable-Diffusion-WebUI  
