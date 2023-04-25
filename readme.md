@@ -1,4 +1,4 @@
-# 在sd-webui-IS-net-pro基础上增加提取关键帧功能
+##  在sd-webui-IS-net-pro基础上增加提取关键帧功能，增加支持替换背景时背景数量与原图数量不同，自动根据背景图片数量按顺序平均分配给原图，例如原图90张，背景图3张，则前30张用第一张背景，30-60张用第二张背景，依此类推
 # sd-webui-IS-net
 在大佬的基础上做了一个简单的插件  
 Just  git it in your extensions folder in your Stable-Diffusion-WebUI  
