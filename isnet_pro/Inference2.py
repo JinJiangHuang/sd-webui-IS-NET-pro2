@@ -458,6 +458,7 @@ def IS_inference_mask(img_mode,dataset_path,output_dir,ui_set_aim_bacground_rgb,
             img1 = io.imread(im_path)
             # 这是一个零到1的变量
             grey = result.permute(1,2,0).cpu().data.numpy()
+            bgindex=0
 
             
             # 背景
@@ -475,8 +476,19 @@ def IS_inference_mask(img_mode,dataset_path,output_dir,ui_set_aim_bacground_rgb,
                 img_bacground[:] = aim_bacground_rgb
 
             elif img_mode == 'self_design_Background':
-                bc_path = bc_list[i]
-                img_bacground = io.imread(bc_path)
+                print(len(bc_list),len(im_list))
+                if(len(bc_list)==len(im_list)):
+                    bc_path = bc_list[i]
+                    img_bacground = io.imread(bc_path)
+                else:
+                    if len(bc_list)==1:
+                        if i==0 :
+                            bc_path = bc_list[i]
+                            img_bacground = io.imread(bc_path)
+                    elif(i%len(bc_list)==0):
+                        bc_path = bc_list[j]
+                        img_bacground = io.imread(bc_path)
+                        bgindex=bgindex+1
 
             elif img_mode == 'fixed_background':
                 if i==0 :
