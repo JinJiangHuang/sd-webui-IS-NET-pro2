@@ -17,6 +17,7 @@ import torch.nn.functional as F
 from torchvision.transforms.functional import normalize
 import sys
 import gradio as gr
+import math
 from PIL import Image
 sys.path.append('./')
 # sys.path.append('demo_datasets\your_dataset')
@@ -488,12 +489,12 @@ def IS_inference_mask(img_mode,dataset_path,output_dir,ui_set_aim_bacground_rgb,
                             img_bacground = io.imread(bc_path)
                     elif(i%len(bc_list)==0):
                         if(i>=curbg):
-                            curbg=curbg+int(len(im_list)/len(bc_list))
+                            curbg=curbg+math.ceil(len(im_list)/len(bc_list))
                             bc_path = bc_list[bgindex]
                             img_bacground = io.imread(bc_path)
                             bgindex=bgindex+1
                             if bgindex>=len(bc_list):
-                                bgindex=0
+                                bgindex=len(bc_list)
 
             elif img_mode == 'fixed_background':
                 if i==0 :
