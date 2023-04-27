@@ -165,7 +165,9 @@ def IS_inference(img_mode,dataset_path,background_path,result_path,ui_set_aim_ba
     im_list = [file for ext in ['jpg', 'jpeg', 'png', 'bmp', 'tiff'] for file in glob(dataset_path + '/*.' + ext.lower())]
     if img_mode =='self_design_Background' or img_mode =='fixed_background':
         bc_list = [file for ext in ['jpg', 'jpeg', 'png', 'bmp', 'tiff'] for file in glob(background_path + '/*.' + ext.lower())]
-
+    bgindex=0
+    curbg=0
+    bgtotal=len(bc_list)
 
     with torch.no_grad():
         for i, im_path in tqdm(enumerate(im_list), total=len(im_list)):
@@ -203,7 +205,6 @@ def IS_inference(img_mode,dataset_path,background_path,result_path,ui_set_aim_ba
             img1 = io.imread(im_path)
             # 这是一个零到1的变量
             grey = result.permute(1,2,0).cpu().data.numpy()
-
             
             # 背景
             if img_mode == 'alpha_channel':
@@ -220,8 +221,25 @@ def IS_inference(img_mode,dataset_path,background_path,result_path,ui_set_aim_ba
                 img_bacground[:] = aim_bacground_rgb
 
             elif img_mode == 'self_design_Background':
-                bc_path = bc_list[i]
-                img_bacground = io.imread(bc_path)
+                #bc_path = bc_list[i]
+                #img_bacground = io.imread(bc_path)
+                print(len(bc_list),len(im_list))
+                if(len(bc_list)==len(im_list)):
+                    bc_path = bc_list[i]
+                    img_bacground = io.imread(bc_path)
+                else:
+                    if len(bc_list)==1:
+                        if i==0 :
+                            bc_path = bc_list[i]
+                            img_bacground = io.imread(bc_path)
+                    elif(i%len(bc_list)==0):
+                        if(i>=curbg):
+                            curbg=curbg+math.ceil(len(im_list)/len(bc_list))
+                            bc_path = bc_list[bgindex]
+                            img_bacground = io.imread(bc_path)
+                            bgindex=bgindex+1
+                            if bgindex>=len(bc_list):
+                                bgindex=len(bc_list)-1
 
             elif img_mode == 'fixed_background':
                 if i==0 :
@@ -289,7 +307,8 @@ def IS_inference_single(img_mode,dataset_path,background_path,result_path,ui_set
     # print(im_list)
     if img_mode =='self_design_Background' or img_mode =='fixed_background':
         bc_list = background_path
-
+    # bgindex=0
+    # curbg=0
 
     with torch.no_grad():
         for i, im_path in tqdm(enumerate(im_list), total=len(im_list)):
@@ -416,7 +435,8 @@ def IS_inference_mask(img_mode,dataset_path,output_dir,ui_set_aim_bacground_rgb,
     if img_mode =='self_design_Background' or img_mode =='fixed_background':
         bc_list = background_path
 
-
+    # bgindex=0
+    # curbg=0
     with torch.no_grad():
         for i, im_path in tqdm(enumerate(im_list), total=len(im_list)):
             if state.interrupted:
@@ -459,8 +479,6 @@ def IS_inference_mask(img_mode,dataset_path,output_dir,ui_set_aim_bacground_rgb,
             img1 = io.imread(im_path)
             # 这是一个零到1的变量
             grey = result.permute(1,2,0).cpu().data.numpy()
-            bgindex=0
-            curbg=0
 
             
             # 背景
@@ -478,23 +496,8 @@ def IS_inference_mask(img_mode,dataset_path,output_dir,ui_set_aim_bacground_rgb,
                 img_bacground[:] = aim_bacground_rgb
 
             elif img_mode == 'self_design_Background':
-                print(len(bc_list),len(im_list))
-                if(len(bc_list)==len(im_list)):
-                    bc_path = bc_list[i]
-                    img_bacground = io.imread(bc_path)
-                else:
-                    if len(bc_list)==1:
-                        if i==0 :
-                            bc_path = bc_list[i]
-                            img_bacground = io.imread(bc_path)
-                    elif(i%len(bc_list)==0):
-                        if(i>=curbg):
-                            curbg=curbg+math.ceil(len(im_list)/len(bc_list))
-                            bc_path = bc_list[bgindex]
-                            img_bacground = io.imread(bc_path)
-                            bgindex=bgindex+1
-                            if bgindex>=len(bc_list):
-                                bgindex=len(bc_list)
+                bc_path = bc_list[i]
+                img_bacground = io.imread(bc_path)
 
             elif img_mode == 'fixed_background':
                 if i==0 :
