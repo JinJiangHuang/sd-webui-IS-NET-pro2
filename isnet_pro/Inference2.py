@@ -224,7 +224,7 @@ def IS_inference(img_mode,dataset_path,background_path,result_path,ui_set_aim_ba
                 #bc_path = bc_list[i]
                 #img_bacground = io.imread(bc_path)
                 print(len(bc_list),len(im_list))
-                if(len(bc_list)==len(im_list)):
+                if(len(bc_list)>=len(im_list)):
                     bc_path = bc_list[i]
                     img_bacground = io.imread(bc_path)
                 else:
