@@ -167,7 +167,6 @@ def IS_inference(img_mode,dataset_path,background_path,result_path,ui_set_aim_ba
         bc_list = [file for ext in ['jpg', 'jpeg', 'png', 'bmp', 'tiff'] for file in glob(background_path + '/*.' + ext.lower())]
     bgindex=0
     curbg=0
-    bgtotal=len(bc_list)
 
     with torch.no_grad():
         for i, im_path in tqdm(enumerate(im_list), total=len(im_list)):
