@@ -19,8 +19,8 @@ def on_ui_tabs():
                                 with gr.Row(variant='panel'):
                                     keyframe_checkbox = gr.Checkbox(label="启用关键帧输出（帧率和时间段无效）\\keyframe")
                                     len_window = gr.Slider(
-                                        minimum=1,
-                                        maximum=60,
+                                        minimum=3,
+                                        maximum=50,
                                         step=1,
                                         label='平滑窗口\\smoothing window size',
                                         value=5,interactive=True)
